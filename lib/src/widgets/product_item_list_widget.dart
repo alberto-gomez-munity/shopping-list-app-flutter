@@ -6,7 +6,7 @@ class ProductItemList extends StatefulWidget {
   final ProductListModel product;
 
   const ProductItemList(this.product);
-
+ 
   @override
   _ProductItemListState createState() => _ProductItemListState();
 }
@@ -20,10 +20,13 @@ class _ProductItemListState extends State<ProductItemList> {
 
   @override
   void initState() {
-    _purchased =  widget.product.purchased || false;
+     print(widget.product.toJson().toString());
+    _purchased =  false;
     _count = widget.product.count;
     _price = widget.product.price;
     _amount = widget.product.amount;
+
+    print(widget.product.toJson().toString());
     super.initState();
   }
 
@@ -72,7 +75,8 @@ class _ProductItemListState extends State<ProductItemList> {
                 Container(
                   margin: EdgeInsets.only(right: 10),
                   child: Image.network(
-                    'https://prod-mercadona.imgix.net/images/66ed0028e21f5e231a920f57feb72445.jpg?fit=crop&h=300&w=300',
+                    (widget.product.image != null) ? widget.product.image
+                    : 'https://lh3.googleusercontent.com/4Ed_2_d7BIxCDgc07fojY_MiXBTvKr1z_q0d6me9l390BciTfbvacXQOKaTI9QeiUyJW',
                     width: 80,
                     height: 80,
                     fit: BoxFit.cover

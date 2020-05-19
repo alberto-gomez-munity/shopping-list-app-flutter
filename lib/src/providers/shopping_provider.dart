@@ -47,4 +47,20 @@ class ShoppingProvider {
     product = new ProductModel.fromJson(json.decode( resp.body ));
     return product;
   }
+
+
+  static Future<ProductListModel> newProductToList(Map<String, dynamic> data, String listId) async {
+
+    final Uri url = Uri.parse('https://europe-west2-despensa-app-munity.cloudfunctions.net/api/products/$listId');
+    print(data.toString());
+    ProductListModel _product;
+    try {
+      final resp = await http.post(url, body: json.encode( data ), encoding: Encoding.getByName("application/json"));    
+      _product = new ProductListModel.fromJson(json.decode( resp.body ));
+    } catch (e) {
+      print('error');
+      print(e.toString());
+    }
+    return _product;
+  }
 }

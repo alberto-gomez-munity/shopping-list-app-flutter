@@ -21,7 +21,7 @@ class ProductModel {
     bool published;
     String shareUrl;
     String thumbnail;
-    List<Category> categories;
+    List<CategoryProduct> categories;
     List<dynamic> extraInfo;
     String displayName;
     bool isVariableWeight;
@@ -62,7 +62,7 @@ class ProductModel {
         published: json["published"] == null ? null : json["published"],
         shareUrl: json["share_url"] == null ? null : json["share_url"],
         thumbnail: json["thumbnail"] == null ? null : json["thumbnail"],
-        categories: json["categories"] == null ? null : List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
+        categories: json["categories"] == null ? null : List<CategoryProduct>.from(json["categories"].map((x) => CategoryProduct.fromJson(x))),
         extraInfo: json["extra_info"] == null ? null : List<dynamic>.from(json["extra_info"].map((x) => x)),
         displayName: json["display_name"] == null ? null : json["display_name"],
         isVariableWeight: json["is_variable_weight"] == null ? null : json["is_variable_weight"],
@@ -92,14 +92,14 @@ class ProductModel {
     };
 }
 
-class Category {
+class CategoryProduct {
     int id;
     String name;
     int level;
     int order;
-    List<Category> categories;
+    List<CategoryProduct> categories;
 
-    Category({
+    CategoryProduct({
         this.id,
         this.name,
         this.level,
@@ -107,12 +107,12 @@ class Category {
         this.categories,
     });
 
-    factory Category.fromJson(Map<String, dynamic> json) => Category(
+    factory CategoryProduct.fromJson(Map<String, dynamic> json) => CategoryProduct(
         id: json["id"] == null ? null : json["id"],
         name: json["name"] == null ? null : json["name"],
         level: json["level"] == null ? null : json["level"],
         order: json["order"] == null ? null : json["order"],
-        categories: json["categories"] == null ? null : List<Category>.from(json["categories"].map((x) => Category.fromJson(x))),
+        categories: json["categories"] == null ? null : List<CategoryProduct>.from(json["categories"].map((x) => CategoryProduct.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {

@@ -5,6 +5,11 @@ import 'package:mercadona/src/providers/shopping_provider.dart';
 import 'package:mercadona/src/widgets/product_item_list_widget.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 
+import '../models/product_list_model.dart';
+import '../models/product_model.dart';
+import '../models/product_model.dart';
+import '../providers/shopping_provider.dart';
+
 
 class ShoppingListDetailsPage extends StatefulWidget {
   
@@ -63,11 +68,31 @@ class _ShoppingListDetailsPageState extends State<ShoppingListDetailsPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           var result = await BarcodeScanner.scan();
-  
-          print(result.type); // The result type (barcode, cancelled, failed)
-          print(result.rawContent); // The barcode content
-          print(result.format); // The barcode format (as enum)
-          print(result.formatNote); // If a unknown format was scanned this field contains a note
+          if(result.type == ResultType.Barcode){
+            String ean = result.rawContent;
+            ProductModel _product = await ShoppingProvider.getProductByEan(ean);
+            CategoryProduct category = _product.categories.last;
+            print(_product.displayName);
+          
+
+            Map<String, dynamic> data = {
+              'id': _product.id,
+              'title': _product.displayName,
+              'amount': double.parse(_product.priceInstructions.unitPrice),
+              'price': double.parse(_product.priceInstructions.unitPrice),
+              'count': 1,
+              'productId': _product.displayName,
+              'category': category.name,
+              'image': _product.photos[0].regular
+            };
+            print(data);
+
+            ProductListModel newProduct = await ShoppingProvider.newProductToList(data, widget.list.id);
+            print(newProduct);
+            setState(() {
+              products.add(newProduct);
+            });
+          }
         },
         backgroundColor: Theme.of(context).primaryColor,
         child: Icon( Icons.add_shopping_cart),

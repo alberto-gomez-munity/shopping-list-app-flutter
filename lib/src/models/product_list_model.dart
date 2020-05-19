@@ -11,9 +11,10 @@ class ProductListModel {
     int count;
     DateTime created;
     double price;
-    String productId;
+    int productId;
     String id;
     String category;
+    String image;
 
     ProductListModel({
         this.title,
@@ -24,7 +25,8 @@ class ProductListModel {
         this.price,
         this.productId,
         this.id,
-        this.category
+        this.category,
+        this.image,
     });
 
     factory ProductListModel.fromJson(Map<String, dynamic> json) => ProductListModel(
@@ -37,6 +39,7 @@ class ProductListModel {
         productId: json["product_id"] == null ? null : json["product_id"],
         id: json["id"] == null ? null : json["id"],
         category: json["category"] == null ? null : json["category"],
+        image: json["image"] == null ? null : json["image"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -49,5 +52,6 @@ class ProductListModel {
         "product_id": productId == null ? null : productId,
         "id": id == null ? null : id,
         "category": category == null ? null : category,
+        "image": image == null ? null : image,
     };
 }
